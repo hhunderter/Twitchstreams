@@ -17,7 +17,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuStreamer'), array('action' => 'index'));
         $callApi = $this->getConfig()->get('twitchstreams_requestEveryPageCall');
         if($callApi == 1) {
-            $this->update();
+            $this->updateAction();
         }
         if($this->getRequest()->getParam('id')) {
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('showStreamer'), array('action' => 'index'));
