@@ -1,8 +1,8 @@
 <?php
+
 namespace Modules\Twitchstreams\Models;
 
 class Streamer extends \Ilch\Model {
-    
     private $id;
     private $user;
     private $title;

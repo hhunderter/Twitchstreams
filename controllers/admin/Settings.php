@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Twitchstreams\Controllers\Admin;
 
 class Settings extends \Ilch\Controller\Admin
@@ -8,7 +9,7 @@ class Settings extends \Ilch\Controller\Admin
     {
         $this->getLayout()->addMenu
         (
-            'module',
+            'twitchstreams',
             array
             (
                 array
@@ -17,6 +18,13 @@ class Settings extends \Ilch\Controller\Admin
                     'active' => false,
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
+                ),
+                array
+                (
+                    'name' => 'add',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
                 ),
                 array
                 (
@@ -32,19 +40,19 @@ class Settings extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-        ->add($this->getTranslator()->trans('module'), array('controller' => 'index', 'action' => 'index'))
-        ->add($this->getTranslator()->trans('settings'), array('action' => 'index'));
-        if($this->getRequest()->isPost()) {
+                ->add($this->getTranslator()->trans('twitchstreams'), array('controller' => 'index', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('settings'), array('action' => 'index'));
+
+        if ($this->getRequest()->isPost()) {
             $requestEveryPage = $this->getRequest()->getPost('requestEveryPage');
-            if($requestEveryPage === 'on') {
+
+            if ($requestEveryPage === 'on') {
                 $this->getConfig()->set('twitchstreams_requestEveryPageCall', 1);
             } else {
                 $this->getConfig()->set('twitchstreams_requestEveryPageCall', 0);
             }
         }
 
-        $this->getView()->set('requestEveryPage', $this->getConfig()->get('twitchstreams_requestEveryPageCall'));    
-        
-        
+        $this->getView()->set('requestEveryPage', $this->getConfig()->get('twitchstreams_requestEveryPageCall'));
     }
 }
