@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Twitchstreams\Plugins;
 
 use \Modules\Twitchstreams\Models\Streamer as StreamerModel;
@@ -8,19 +9,22 @@ class Streamer
 {    
     private $streamer;
     private $onlineStreamer = array();
-    
+
     public function getOnlineStreamer()
     {
         $mapper = new StreamerMapper();
+
         $userArray = array();
-        foreach($this->streamer as $streamer) {
-            $userArray[] = $streamer->getUser();    
+        foreach ($this->streamer as $streamer) {
+            $userArray[] = $streamer->getUser();
         }
+
         $user = implode(',', $userArray);
-        $url = 'https://api.twitch.tv/kraken/streams?channel=' . $user;
+        $url = 'https://api.twitch.tv/kraken/streams?channel='.$user;
         $contents = file_get_contents($url);
         $allres = json_decode($contents);
-        foreach($allres->{'streams'} as $stream) {
+
+        foreach ($allres->{'streams'} as $stream) {
             $assoc = $mapper->readByUser($stream->{'channel'}->{'display_name'});
             $model = new StreamerModel();
             $model->setId($assoc['id']);
@@ -34,9 +38,10 @@ class Streamer
             $model->setCreatedAt($stream->{'created_at'});
             $this->onlineStreamer[] = $model;
         }
+
         return $this->onlineStreamer;
     }
-    
+
     public function setStreamer($streamer)
     {
         $this->streamer = $streamer;

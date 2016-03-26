@@ -1,4 +1,5 @@
 <?php
+
 namespace Modules\Twitchstreams\Config;
 
 class Config extends \Ilch\Config\Install
@@ -7,7 +8,6 @@ class Config extends \Ilch\Config\Install
     (
         'key' => 'twitchstreams',
         'icon_small' => 'twitchstreams.png',
-        'system_modules' => true,
         'languages' => array
         (
             'de_DE' => array
@@ -18,7 +18,7 @@ class Config extends \Ilch\Config\Install
             'en_EN' => array
             (
                 'name' => 'Twitchstreams',
-                'description' => 'Here you can manage twitch streamer',
+                'description' => 'Here you can manage Twitch streamer',
             ),
         )
     );
@@ -34,22 +34,22 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti("DROP TABLE `[prefix]_twitchstreams_streamer`");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = `twitchstreams_requestEveryPageCall`");        
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = `twitchstreams_requestEveryPageCall`");
     }
     
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_twitchstreams_streamer` (
-                `id` int(11) NOT NULL AUTO_INCREMENT,
-                `user` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                `online` int(2) NOT NULL,
-                `game` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                `viewers` int(11) NOT NULL,
-                `previewMedium` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                `link` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                `createdAt` date NOT NULL,
-                PRIMARY KEY(`id`)
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `user` VARCHAR(255) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `online` INT(1) NOT NULL,
+                  `game` VARCHAR(255) NOT NULL,
+                  `viewers` INT(11) NOT NULL,
+                  `previewMedium` VARCHAR(255) NOT NULL,
+                  `link` VARCHAR(255) NOT NULL,
+                  `createdAt` DATETIME NOT NULL,
+                  PRIMARY KEY(`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
     
