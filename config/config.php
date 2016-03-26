@@ -41,13 +41,13 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_twitchstreams_streamer` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `user` VARCHAR(255) COLLATE NOT NULL,
-                  `title` VARCHAR(255) COLLATE NOT NULL,
-                  `online` INT(2) NOT NULL,
-                  `game` VARCHAR(255) COLLATE NOT NULL,
+                  `user` VARCHAR(255) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `online` INT(1) NOT NULL,
+                  `game` VARCHAR(255) NOT NULL,
                   `viewers` INT(11) NOT NULL,
                   `previewMedium` VARCHAR(255) NOT NULL,
-                  `link` VARCHAR(255) COLLATE NOT NULL,
+                  `link` VARCHAR(255) NOT NULL,
                   `createdAt` DATETIME NOT NULL,
                   PRIMARY KEY(`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
