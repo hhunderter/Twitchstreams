@@ -9,36 +9,46 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = array
+        (
+            array
+            (
+                'name' => 'menuStreamer',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
+            ),
+            array
+            (
+                'name' => 'add',
+                'active' => false,
+                'icon' => 'fa fa-plus-circle',
+                'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
+            ),
+            array
+            (
+                'name' => 'settings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
+            )
+        );  
+
+        if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
+            $items[1]['active'] = true;
+        } elseif ($this->getRequest()->getControllerName() == 'settings') {
+            $items[2]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
         $this->getLayout()->addMenu
         (
             'twitchstreams',
-            array
-            (
-                array
-                (
-                    'name' => 'menuStreamer',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-                array
-                (
-                    'name' => 'add',
-                    'active' => false,
-                    'icon' => 'fa fa-plus-circle',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
-                ),
-                array
-                (
-                    'name' => 'menuSettings',
-                    'active' => false,
-                    'icon' => 'fa fa-cogs',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
-                )
-            )
+            $items
         );
     }
-    
+
     public function indexAction()
     {
         $mapper = new StreamerMapper();
@@ -49,7 +59,7 @@ class Index extends \Ilch\Controller\Admin
 
         $this->getView()->set('streamer', $mapper->getStreamer());
     }
-    
+
     public function treatAction()
     {
         $mapper = new StreamerMapper();
@@ -93,12 +103,25 @@ class Index extends \Ilch\Controller\Admin
                 $model->setUser($user);
                 $model->setOnline(0);
                 $mapper->save($model);
-                
+
+                $mapper->updateOnlineStreamer();
+
                 $this->addMessage('saveSuccess');
                 
                 $this->redirect(array('action' => 'index'));
             }
         }
+    }
+
+    public function updateAction()
+    {
+        $mapper = new StreamerMapper();
+
+        $mapper->updateOnlineStreamer();
+
+        $this->addMessage('updateSuccess');
+
+        $this->redirect(array('action' => 'index'));
     }
 
     public function deleteAction()

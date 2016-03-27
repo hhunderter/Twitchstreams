@@ -9,12 +9,11 @@ class Streamer extends \Ilch\Mapper
 {
     public function getStreamer($where = array())
     {
-        $result = $this->db()->select('*')
-                    ->from('twitchstreams_streamer')
-                    ->where($where)
-                    ->execute();
-
-        $resultArray = $result->fetchRows();
+        $resultArray = $this->db()->select('*')
+            ->from('twitchstreams_streamer')
+            ->where($where)
+            ->execute()
+            ->fetchRows();
 
         if (empty($resultArray)) {
             return null;
@@ -38,38 +37,45 @@ class Streamer extends \Ilch\Mapper
         return $streamer;
     }
 
-    public function save($model)
+    public function save(StreamerModel $model)
     {
+        $fields = array
+        (
+            'user' => $model->getUser(),
+            'title' => $model->getTitle(),
+            'online' => $model->getOnline(),
+            'game' => $model->getGame(),
+            'viewers' => $model->getViewers(),
+            'previewMedium' => $model->getPreviewMedium(),
+            'link' => $model->getLink(),
+            'createdAt' => $model->getCreatedAt(),
+        );
+
         if ($model->getId()) {
-            $this->db()->update()
-                ->table('twitchstreams_streamer')
-                ->values(['user' => $model->getUser(), 'title' => $model->getTitle(), 'online' => $model->getOnline(), 'game' => $model->getGame(),
-                          'viewers' => $model->getViewers(), 'previewMedium' => $model->getPreviewMedium(), 'link' => $model->getLink(),
-                          'createdAt' => $model->getCreatedAt()])
+            $this->db()->update('twitchstreams_streamer')
+                ->values($fields)
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('twitchstreams_streamer')
-                    ->values(array('user' => $model->getUser(), 'title' => $model->getTitle(), 'online' => $model->getOnline(), 'game' => $model->getGame(),
-                                   'viewers' => $model->getViewers(), 'link' => $model->getLink(), 'createdAt' => $model->getCreatedAt()))
-                    ->execute();
+                ->values($fields)
+                ->execute();
         }
     }
     
     public function delete($id)
     {
-        $this->db()->delete()
-                ->from('twitchstreams_streamer')
-                ->where(['id' => $id])
-                ->execute();
+        $this->db()->delete('twitchstreams_streamer')
+            ->where(['id' => $id])
+            ->execute();
     }
 
     public function readById($id)
     {
         $result = $this->db()->select(['id', 'user', 'online', 'game', 'viewers'])
-                ->from('twitchstreams_streamer')
-                ->where(['id' => $id])
-                ->execute();
+            ->from('twitchstreams_streamer')
+            ->where(['id' => $id])
+            ->execute();
 
         return $result->fetchAssoc();
     }
@@ -77,9 +83,9 @@ class Streamer extends \Ilch\Mapper
     public function readByUser($user)
     {
         $result = $this->db()->select(['id', 'user', 'online', 'game', 'viewers'])
-                ->from('twitchstreams_streamer')
-                ->where(['user' => $user])
-                ->execute();
+            ->from('twitchstreams_streamer')
+            ->where(['user' => $user])
+            ->execute();
 
         return $result->fetchAssoc();
     }
@@ -87,7 +93,7 @@ class Streamer extends \Ilch\Mapper
     public function updateOnlineStreamer()
     {
         $api = new StreamerAPI();
-        $tempStreamerArray = array();
+
         $streamerInDatabase = $this->getStreamer();
         $api->setStreamer($streamerInDatabase);
         $onlineStreamer = $api->getOnlineStreamer();

@@ -1,15 +1,19 @@
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" class="form-horizontal" action="">
     <?=$this->getTokenField() ?>
-    <div class="panel panel-default">
-        <div class="panel-heading">Allgemeine Einstellungen</div>
-        <div class="panel-body">
-            <div class="checkbox">
-                <label>
-                    <input name="requestEveryPage" type="checkbox" <?php if ($this->get('requestEveryPage') == 1) { echo 'checked'; } ?>> Streams bei jedem Seitenaufruf aktualisieren?	
-                </label>
+    <div class="form-group">
+        <label for="requestEveryPage" class="col-lg-2 control-label">
+            <?=$this->getTrans('requestEveryPage') ?>
+        </label>
+        <div class="col-lg-2">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" name="requestEveryPage" value="1" id="requestEveryPage-on" <?php if ($this->get('requestEveryPage') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="requestEveryPage-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" name="requestEveryPage" value="0" id="requestEveryPage-off" <?php if ($this->get('requestEveryPage') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="requestEveryPage-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
             </div>
         </div>
     </div>
 
-    <?= $this->getSaveBar(); ?>
+    <?=$this->getSaveBar(); ?>
 </form>
