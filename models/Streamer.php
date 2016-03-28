@@ -3,15 +3,15 @@
 namespace Modules\Twitchstreams\Models;
 
 class Streamer extends \Ilch\Model {
-    private $id;
-    private $user;
-    private $title;
-    private $online;
-    private $game;
-    private $viewers;
-    private $previewMedium;
-    private $link;
-    private $createdAt;
+    protected $id;
+    protected $user;
+    protected $title;
+    protected $online;
+    protected $game;
+    protected $viewers;
+    protected $previewMedium;
+    protected $link;
+    protected $createdAt;
         
     public function setId($id)
     {

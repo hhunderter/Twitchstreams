@@ -9,7 +9,11 @@
       <col class="col-lg-1">
     </colgroup>
     <tr>
-      <th></th>
+      <th>
+        <a href="<?=$this->getUrl(array('module' => 'twitchstreams', 'controller' => 'index', 'action' => 'update')) ?>" alt="<?=$this->getTrans('updateStreams') ?>" title="<?=$this->getTrans('updateStreams') ?>">
+          <i class="fa fa-refresh"></i>
+        </a>
+      </th>
       <th></th>
       <th><?=$this->getTrans('streamer') ?></th>
       <th><?=$this->getTrans('online') ?></th>

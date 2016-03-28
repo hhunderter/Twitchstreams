@@ -13,22 +13,28 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuStreamer'), array('action' => 'index'));
 
-        $callApi = $this->getConfig()->get('twitchstreams_requestEveryPageCall');
-
-        if ($callApi == 1) {
+        if ($this->getConfig()->get('twitchstreams_requestEveryPageCall') == 1) {
             $this->updateAction();
         }
 
-        if ($this->getRequest()->getParam('id')) {
-            $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('showStreamer'), array('action' => 'index'));
+        $this->getView()->set('streamer', $mapper->getStreamer(array('online' => 1)));
+    }
 
-            $id = $this->getRequest()->getParam('id');
+    public function showAction()
+    {
+        $mapper = new StreamerMapper();
 
-            $this->getView()->set('streamer', $mapper->getStreamer(array('id' => $id, 'online' => 1)));
-        } else {
-            $this->getView()->set('streamer', $mapper->getStreamer(array('online' => 1)));
+        $streamer = $mapper->getStreamer(array('id' => $this->getRequest()->getParam('id')));
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuStreamer'), array('action' => 'index'))
+                ->add($streamer[0]->getUser(), array('id' => $this->getRequest()->getParam('id')));
+
+        if ($this->getConfig()->get('twitchstreams_requestEveryPageCall') == 1) {
+            $this->updateAction();
         }
+
+        $this->getView()->set('streamer', $mapper->getStreamer(array('id' => $this->getRequest()->getParam('id'))));
     }
 
     public function updateAction()
