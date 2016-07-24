@@ -10,6 +10,6 @@ class Streamer extends \Ilch\Box
     {
         $mapper = new StreamerMapper();
 
-        $this->getView()->set('streamer', $mapper->getStreamer(array('online' => 1)));
+        $this->getView()->set('streamer', $mapper->getStreamer(['online' => 1]));
     }
 }

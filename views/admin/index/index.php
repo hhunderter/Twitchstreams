@@ -10,7 +10,7 @@
     </colgroup>
     <tr>
       <th>
-        <a href="<?=$this->getUrl(array('module' => 'twitchstreams', 'controller' => 'index', 'action' => 'update')) ?>" alt="<?=$this->getTrans('updateStreams') ?>" title="<?=$this->getTrans('updateStreams') ?>">
+        <a href="<?=$this->getUrl(['module' => 'twitchstreams', 'controller' => 'index', 'action' => 'update']) ?>" alt="<?=$this->getTrans('updateStreams') ?>" title="<?=$this->getTrans('updateStreams') ?>">
           <i class="fa fa-refresh"></i>
         </a>
       </th>
@@ -23,8 +23,8 @@
     <?php if ($this->get('streamer') != ''): ?>
       <?php foreach ($this->get('streamer') as $streamer): ?>
         <tr>
-          <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $streamer->getId())); ?></td>
-          <td><?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $streamer->getId())) ?></td>
+          <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $streamer->getId()]); ?></td>
+          <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $streamer->getId()]) ?></td>
           <td><?=$streamer->getUser() ?></td>
           <td>
               <?php if ($streamer->getOnline() == 1): ?>

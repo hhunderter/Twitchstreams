@@ -6,15 +6,15 @@ use \Modules\Twitchstreams\Models\Streamer as StreamerModel;
 use \Modules\Twitchstreams\Mappers\Streamer as StreamerMapper;
 
 class Streamer
-{    
+{
     private $streamer;
-    private $onlineStreamer = array();
+    private $onlineStreamer = [];
 
     public function getOnlineStreamer()
     {
         $mapper = new StreamerMapper();
 
-        $userArray = array();
+        $userArray = [];
         foreach ($this->streamer as $streamer) {
             $userArray[] = $streamer->getUser();
         }

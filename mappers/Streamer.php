@@ -7,7 +7,7 @@ use \Modules\Twitchstreams\Plugins\Streamer as StreamerAPI;
 
 class Streamer extends \Ilch\Mapper
 {
-    public function getStreamer($where = array())
+    public function getStreamer($where = [])
     {
         $resultArray = $this->db()->select('*')
             ->from('twitchstreams_streamer')
@@ -19,7 +19,7 @@ class Streamer extends \Ilch\Mapper
             return null;
         }
 
-        $streamer = array();
+        $streamer = [];
         foreach ($resultArray as $streamerRow) {
             $model = new StreamerModel();
             $model->setId($streamerRow['id']);
@@ -39,8 +39,7 @@ class Streamer extends \Ilch\Mapper
 
     public function save(StreamerModel $model)
     {
-        $fields = array
-        (
+        $fields = [
             'user' => $model->getUser(),
             'title' => $model->getTitle(),
             'online' => $model->getOnline(),
@@ -49,7 +48,7 @@ class Streamer extends \Ilch\Mapper
             'previewMedium' => $model->getPreviewMedium(),
             'link' => $model->getLink(),
             'createdAt' => $model->getCreatedAt(),
-        );
+        ];
 
         if ($model->getId()) {
             $this->db()->update('twitchstreams_streamer')

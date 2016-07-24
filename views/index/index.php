@@ -8,14 +8,14 @@
       <div id="streamer">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <a href="<?=$this->getUrl(array('module' => 'twitchstreams', 'controller' => 'index', 'action' => 'show', 'id' => $streamer[$i]->getId())) ?>">
+            <a href="<?=$this->getUrl(['module' => 'twitchstreams', 'controller' => 'index', 'action' => 'show', 'id' => $streamer[$i]->getId()]) ?>">
               <?=$streamer[$i]->getTitle() ?>
             </a>
           </div>
           <div class="panel-body">
             <div  id="show-info">
               <div class="col-md-12 col-lg-4">
-                <a href="<?=$this->getUrl(array('module' => 'twitchstreams', 'controller' => 'index', 'action' => 'show', 'id' => $streamer[$i]->getId())) ?>">
+                <a href="<?=$this->getUrl(['module' => 'twitchstreams', 'controller' => 'index', 'action' => 'show', 'id' => $streamer[$i]->getId()]) ?>">
                   <img class="thumbnail" src="<?=$streamer[$i]->getPreviewMedium() ?>" title="<?=$streamer[$i]->getUser().' '.$this->getTrans('playing').' '.$streamer[$i]->getGame() ?>">
                 </a>
               </div>
@@ -24,7 +24,7 @@
                   <li class="list-group-item">
                     <?=$this->getTrans('streamer') ?>
                     <span class="badge">
-                      <a href="<?=$this->getUrl(array('module' => 'twitchstreams', 'controller' => 'index', 'action' => 'show', 'id' => $streamer[$i]->getId())) ?>">
+                      <a href="<?=$this->getUrl(['module' => 'twitchstreams', 'controller' => 'index', 'action' => 'show', 'id' => $streamer[$i]->getId()]) ?>">
                         <?=$streamer[$i]->getUser() ?>
                       </a>
                     </span>

@@ -9,30 +9,26 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $items = array
-        (
-            array
-            (
+        $items = [
+            [
                 'name' => 'menuStreamer',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-            ),
-            array
-            (
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
                 'name' => 'add',
                 'active' => false,
                 'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
-            ),
-            array
-            (
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+            ],
+            [
                 'name' => 'settings',
                 'active' => false,
                 'icon' => 'fa fa-cogs',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
-            )
-        );  
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+            ]
+        ]; 
 
         if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
             $items[1]['active'] = true;
@@ -54,8 +50,8 @@ class Index extends \Ilch\Controller\Admin
         $mapper = new StreamerMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('twitchstreams'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuStreamer'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('twitchstreams'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuStreamer'), ['action' => 'index']);
 
         $this->getView()->set('streamer', $mapper->getStreamer());
     }
@@ -66,14 +62,14 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('twitchstreams'), array('action' => 'index'))
-                    ->add($this->getTranslator()->trans('edit'), array('action' => 'treat'));
+                    ->add($this->getTranslator()->trans('twitchstreams'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $this->getView()->set('streamer', $mapper->readById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('twitchstreams'), array('controller' => 'index', 'action' => 'index'))
-                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
+                    ->add($this->getTranslator()->trans('twitchstreams'), ['controller' => 'index', 'action' => 'index'])
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->getParam('id')) {
@@ -108,7 +104,7 @@ class Index extends \Ilch\Controller\Admin
 
                 $this->addMessage('saveSuccess');
                 
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             }
         }
     }
@@ -121,7 +117,7 @@ class Index extends \Ilch\Controller\Admin
 
         $this->addMessage('updateSuccess');
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function deleteAction()
@@ -132,7 +128,7 @@ class Index extends \Ilch\Controller\Admin
 
             $this->addMessage('deleteSuccess');
 
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
     }
 }
