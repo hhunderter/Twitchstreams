@@ -55,7 +55,7 @@ class Streamer extends \Ilch\Model {
     
     public function setGame($game)
     {
-        $this->game = $game;    
+        $this->game = $game;
     }
     
     public function getGame()

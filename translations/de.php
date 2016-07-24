@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return array
-(
+return [
     'twitchstreams' => 'Twitchstreams',
     'menuStreamer' => 'Streamer',
     'showStreamer' => 'Streamer-Informationen',
@@ -27,4 +26,4 @@ return array
     'hideStream' => 'Stream ausblenden',
     'showChat' => 'Chat einblenden',
     'hideChat' => 'Chat ausblenden',
-);
+];

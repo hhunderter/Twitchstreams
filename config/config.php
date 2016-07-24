@@ -4,25 +4,21 @@ namespace Modules\Twitchstreams\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config = [
         'key' => 'twitchstreams',
-        'icon_small' => 'twitchstreams.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'icon_small' => 'fa-twitch',
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Twitchstreams',
                 'description' => 'Hier können Twitch-Streamer verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+            ],
+            'en_EN' => [
                 'name' => 'Twitchstreams',
                 'description' => 'Here you can manage Twitch streamer',
-            ),
-        )
-    );
-    
+            ],
+        ]
+    ];
+
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
@@ -52,5 +48,9 @@ class Config extends \Ilch\Config\Install
                   PRIMARY KEY(`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
-    
+
+    public function getUpdate()
+    {
+
+    }
 }
