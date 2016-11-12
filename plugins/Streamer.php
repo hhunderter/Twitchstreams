@@ -7,8 +7,13 @@ use \Modules\Twitchstreams\Mappers\Streamer as StreamerMapper;
 
 class Streamer
 {
+    private $apiKey = '';
     private $streamer;
     private $onlineStreamer = [];
+
+    function __construct($apiKey) {
+        $this->apiKey = $apiKey;
+    }
 
     public function getOnlineStreamer()
     {
@@ -20,10 +25,14 @@ class Streamer
         }
 
         $user = implode(',', $userArray);
-        $url = 'https://api.twitch.tv/kraken/streams?channel='.$user;
-        $contents = file_get_contents($url);
-        $allres = json_decode($contents);
-
+        $ch = curl_init('https://api.twitch.tv/kraken/streams?channel='.$user);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Client-ID: ' . $this->apiKey . ''));
+        $data = curl_exec($ch);
+        curl_close($ch);
+        $allres = json_decode($data);
+        
         foreach ($allres->{'streams'} as $stream) {
             $assoc = $mapper->readByUser($stream->{'channel'}->{'display_name'});
             $model = new StreamerModel();

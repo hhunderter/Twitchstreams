@@ -41,6 +41,6 @@ class Index extends \Ilch\Controller\Frontend
     {
         $mapper = new StreamerMapper();
 
-        $mapper->updateOnlineStreamer();
+        $mapper->updateOnlineStreamer((string)$this->getConfig()->get('twitchstreams_apikey'));
     }
 }

@@ -26,4 +26,5 @@ return [
     'hideStream' => 'Hide Stream',
     'showChat' => 'Show Chat',
     'hideChat' => 'Hide Chat',
+    'apiKeyLabel' => 'API-Key:',
 ];

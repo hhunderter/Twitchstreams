@@ -1,6 +1,10 @@
 <form method="POST" class="form-horizontal" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
+        <label for="apiKey"><?=$this->getTrans('apiKeyLabel')?></label>
+        <input type="text" class="form-control" id="apiKey" name="apiKey" value="<?=$this->get('apiKey') ?>" placeholder="API-Key">
+    </div>
+    <div class="form-group">
         <label for="requestEveryPage" class="col-lg-2 control-label">
             <?=$this->getTrans('requestEveryPage') ?>
         </label>

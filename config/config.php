@@ -25,12 +25,14 @@ class Config extends \Ilch\Config\Install
         
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('twitchstreams_requestEveryPageCall', '0');
+        $databaseConfig->set('twitchstreams_apikey', '');
     }
     
     public function uninstall()
     {
         $this->db()->queryMulti("DROP TABLE `[prefix]_twitchstreams_streamer`");
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = `twitchstreams_requestEveryPageCall`");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = `twitchstreams_apikey`");
     }
     
     public function getInstallSql()
