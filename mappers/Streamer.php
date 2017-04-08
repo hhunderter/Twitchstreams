@@ -7,6 +7,7 @@ use \Modules\Twitchstreams\Plugins\Streamer as StreamerAPI;
 
 class Streamer extends \Ilch\Mapper
 {
+
     public function getStreamer($where = [])
     {
         $resultArray = $this->db()->select('*')
@@ -89,9 +90,9 @@ class Streamer extends \Ilch\Mapper
         return $result->fetchAssoc();
     }
     
-    public function updateOnlineStreamer()
+    public function updateOnlineStreamer($apiKey)
     {
-        $api = new StreamerAPI();
+        $api = new StreamerAPI($apiKey);
 
         $streamerInDatabase = $this->getStreamer();
         $api->setStreamer($streamerInDatabase);
