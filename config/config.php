@@ -6,7 +6,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'twitchstreams',
-        'version' => '1.0',
+        'version' => '1.1',
         'icon_small' => 'fa-twitch',
         'author' => 'Fasse, Fabian',
         'languages' => [
@@ -29,7 +29,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.0.0',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -62,11 +62,15 @@ class Config extends \Ilch\Config\Install
             `link` VARCHAR(255) NOT NULL,
             `createdAt` DATETIME NOT NULL,
             PRIMARY KEY(`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.0":
+                // Convert tables to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_twitchstreams_streamer` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+        }
     }
 }
