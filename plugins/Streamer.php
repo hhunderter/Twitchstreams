@@ -30,7 +30,7 @@ class Streamer
 
         $ch = curl_init('https://api.twitch.tv/helix/streams?' . $user);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: application/vnd.twitchtv.v5+json', 'Client-ID: ' . $this->apiKey]);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Client-ID: ' . $this->apiKey]);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $data = curl_exec($ch);
         curl_close($ch);
@@ -41,7 +41,7 @@ class Streamer
 
             $ga = curl_init('https://api.twitch.tv/helix/games?id=' . $stream->{'game_id'});
             curl_setopt($ga, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ga, CURLOPT_HTTPHEADER, ['Accept: application/vnd.twitchtv.v5+json', 'Client-ID: ' . $this->apiKey]);
+            curl_setopt($ga, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Client-ID: ' . $this->apiKey]);
             curl_setopt($ga, CURLOPT_SSL_VERIFYPEER, false);
             $gaData = curl_exec($ga);
             curl_close($ga);
@@ -51,6 +51,7 @@ class Streamer
             $model->setId($assoc['id'])
                 ->setUser($stream->{'user_name'})
                 ->setTitle($stream->{'title'})
+                ->setViewers($stream->{'viewer_count'})
                 ->setOnline($stream->{'type'})
                 ->setPreviewMedium(str_replace('{width}x{height}', '1920x1080', $stream->{'thumbnail_url'}))
                 ->setCreatedAt($stream->{'started_at'});
