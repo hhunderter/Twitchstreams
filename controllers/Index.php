@@ -9,6 +9,7 @@ class Index extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $mapper = new StreamerMapper();
+        $streamers = $mapper->getStreamer(['online' => 1]);
 
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuStreamer'), ['action' => 'index']);
@@ -17,7 +18,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->updateAction();
         }
 
-        $this->getView()->set('streamer', $mapper->getStreamer(['online' => 1]));
+        $this->getView()->set('streamer', $streamers);
     }
 
     public function showAction()
@@ -25,6 +26,10 @@ class Index extends \Ilch\Controller\Frontend
         $mapper = new StreamerMapper();
 
         $streamer = $mapper->getStreamer(['id' => $this->getRequest()->getParam('id')]);
+        if (!$streamer) {
+            $this->redirect()
+                    ->to(['action' => 'index']);
+        }
 
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuStreamer'), ['action' => 'index'])
@@ -34,7 +39,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->updateAction();
         }
 
-        $this->getView()->set('streamer', $mapper->getStreamer(['id' => $this->getRequest()->getParam('id')]));
+        $this->getView()->set('streamer', $streamer);
     }
 
     public function updateAction()

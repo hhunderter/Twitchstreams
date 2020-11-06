@@ -14,19 +14,19 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'menuStreamer',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fas fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fas fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
                 ]
             ],
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fas fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
@@ -66,52 +66,43 @@ class Index extends \Ilch\Controller\Admin
     public function treatAction()
     {
         $mapper = new StreamerMapper();
+        $streamer = new StreamerModel();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('twitchstreams'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $this->getView()->set('streamer', $mapper->readById($this->getRequest()->getParam('id')));
+            $streamer = $mapper->readById($this->getRequest()->getParam('id'));
+            $this->getView()->set('streamer', $streamer);
+
+            if (!$streamer) {
+                $this->redirect()
+                        ->to(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('twitchstreams'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
-        if ($this->getRequest()->getParam('id')) {
-            $streamerArray = $mapper->readById($this->getRequest()->getParam('id'));
-            $streamerModel = new StreamerModel();
-            $streamerModel->setId($streamerArray['id'])
-                ->setUser($streamerArray['user'])
-                ->setOnline($streamerArray['online'])
-                ->setGame($streamerArray['game']);
-
-            $this->getView()->set('streamer', $streamerModel);
-        }
-
         if ($this->getRequest()->isPost()) {
-            $mapper = new StreamerMapper();
-            $model = new StreamerModel();
-
             Validation::setCustomFieldAliases([
                 'inputUser' => 'streamer'
             ]);
+            
+            if ($streamer->getUser() === null || $this->getRequest()->getPost('inputUser') !== $streamer->getUser()) {
+                $validationrules = ['inputUser' => 'required|unique:twitchstreams_streamer,user'];
+            } else {
+                $validationrules = ['inputUser' => 'required'];
+            }
 
-            $validation = Validation::create($this->getRequest()->getPost(), [
-                'inputUser' => 'required'
-            ]);
+            $validation = Validation::create($this->getRequest()->getPost(), $validationrules);
 
             if ($validation->isValid()) {
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
-
-                $model->setUser($this->getRequest()->getPost('inputUser'))
-                    ->setOnline(0);
-                $mapper->save($model);
-
-                $mapper->updateOnlineStreamer($this->getConfig()->get('twitchstreams_apiKey'));
+                $streamer->setUser($this->getRequest()->getPost('inputUser'));
+                
+                $mapper->updateOnlineStreamer($this->getConfig()->get('twitchstreams_apiKey'), $streamer);
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
@@ -122,7 +113,7 @@ class Index extends \Ilch\Controller\Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'treat']);
+                ->to(array_merge(['action' => 'treat'], ($this->getRequest()->getParam('id') ? ['id' => $this->getRequest()->getParam('id')] : [])));
         }
     }
 

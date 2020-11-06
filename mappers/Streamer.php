@@ -17,7 +17,7 @@ class Streamer extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($resultArray)) {
-            return [];
+            return null;
         }
 
         $streamer = [];
@@ -50,73 +50,86 @@ class Streamer extends \Ilch\Mapper
         ];
 
         if ($model->getId()) {
-            $this->db()->update('twitchstreams_streamer')
+            $return = $this->db()->update('twitchstreams_streamer')
                 ->values($fields)
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('twitchstreams_streamer')
+            $return = $this->db()->insert('twitchstreams_streamer')
                 ->values($fields)
                 ->execute();
         }
+        return $return;
     }
 
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete('twitchstreams_streamer')
             ->where(['id' => $id])
             ->execute();
     }
 
-    public function readById($id)
+    public function readById(int $id)
     {
-        $result = $this->db()->select(['id', 'user', 'online', 'game', 'viewers'])
-            ->from('twitchstreams_streamer')
-            ->where(['id' => $id])
-            ->execute();
+        $entrys = $this->getStreamer(['id' => (int) $id]);
 
-        return $result->fetchAssoc();
+        if (!empty($entrys)) {
+            return reset($entrys);
+        }
+        
+        return null;
     }
 
-    public function readByUser($user)
+    public function readByUser(string $user)
     {
-        $result = $this->db()->select(['id', 'user', 'online', 'game', 'viewers'])
-            ->from('twitchstreams_streamer')
-            ->where(['user' => $user])
-            ->execute();
+        $entrys = $this->getStreamer(['user' => $user]);
 
-        return $result->fetchAssoc();
+        if (!empty($entrys)) {
+            return reset($entrys);
+        }
+        
+        return null;
     }
 
-    public function updateOnlineStreamer($apiKey)
+    public function updateOnlineStreamer(string $apiKey, StreamerModel $streamer = null)
     {
         $api = new StreamerAPI($apiKey);
 
-        $streamerInDatabase = $this->getStreamer();
+        if (!$streamer) {
+            $streamerInDatabase = $this->getStreamer();
+        } else {
+            $streamerInDatabase[] = $streamer;
+        }
+        
+        if (!$streamerInDatabase){
+            return null;
+        }
+
         $api->setStreamer($streamerInDatabase);
         $onlineStreamer = $api->getOnlineStreamer();
-        if (is_array($streamerInDatabase) || is_object($streamerInDatabase)) {
-            foreach ($streamerInDatabase as $streamer) {
-                $streamer->setTitle("")
-                    ->setOnline(0)
-                    ->setGame("")
-                    ->setViewers(0)
-                    ->setPreviewMedium("");
 
-                foreach ($onlineStreamer as $obj) {
-                    if ($streamer->getId() == $obj->getId()) {
-                        $streamer->setTitle($obj->getTitle())
-                            ->setOnline(1)
-                            ->setGame($obj->getGame())
-                            ->setViewers($obj->getViewers())
-                            ->setPreviewMedium($obj->getPreviewMedium())
-                            ->setCreatedAt($obj->getCreatedAt());
-                        break;
-                    }
+        foreach ($streamerInDatabase as $streamer) {
+            $streamer->setTitle("")
+                ->setOnline(0)
+                ->setGame("")
+                ->setViewers(0)
+                ->setPreviewMedium("");
+
+            foreach ($onlineStreamer as $id => $obj) {
+                if ($streamer->getUser() == $obj->getUser()) {
+                    $streamer->setTitle($obj->getTitle())
+                        ->setOnline($obj->getOnline())
+                        ->setGame($obj->getGame())
+                        ->setViewers($obj->getViewers())
+                        ->setPreviewMedium($obj->getPreviewMedium())
+                        ->setCreatedAt($obj->getCreatedAt());
+                    unset($onlineStreamer[$id]);
+                    break;
                 }
-
-                $this->save($streamer);
             }
+
+            $this->save($streamer);
         }
+        return $streamerInDatabase;
     }
 }

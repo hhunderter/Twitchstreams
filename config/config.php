@@ -6,7 +6,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'twitchstreams',
-        'version' => '1.2.0',
+        'version' => '1.3.0',
         'icon_small' => 'fa-twitch',
         'author' => 'Fasse, Fabian',
         'languages' => [
@@ -29,8 +29,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.15',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.41',
+        'phpVersion' => '7.0'
     ];
 
     public function install()
@@ -41,14 +41,14 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('twitchstreams_requestEveryPageCall', '0')
             ->set('twitchstreams_apikey', '');
     }
-    
+
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_twitchstreams_streamer`');
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'twitchstreams_requestEveryPageCall';
             DELETE FROM `[prefix]_config` WHERE `key` = 'twitchstreams_apikey';");
     }
-    
+
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_twitchstreams_streamer` (
@@ -73,6 +73,14 @@ class Config extends \Ilch\Config\Install
             case "1.1":
                 // Delete non use link
                 $this->db()->query('ALTER TABLE `[prefix]_twitchstreams_streamer` DROP COLUMN `link`;');
+            case "1.2.0":
+                // update zu 1.3.0
+                /*
+                Change Font Awesome icons
+                PSR2 Fix
+                Some Beauty code fixes
+                Fix twitch api
+                */
         }
     }
 }
