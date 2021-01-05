@@ -6,7 +6,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'twitchstreams',
-        'version' => '1.3.0',
+        'version' => '1.3.1',
         'icon_small' => 'fa-twitch',
         'author' => 'Fasse, Fabian',
         'languages' => [
@@ -39,14 +39,16 @@ class Config extends \Ilch\Config\Install
         
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('twitchstreams_requestEveryPageCall', '0')
-            ->set('twitchstreams_apikey', '');
+            ->set('twitchstreams_apikey', '')
+            ->set('twitchstreams_domains', '');
     }
 
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_twitchstreams_streamer`');
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'twitchstreams_requestEveryPageCall';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'twitchstreams_apikey';");
+            DELETE FROM `[prefix]_config` WHERE `key` = 'twitchstreams_apikey';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'twitchstreams_domains';");
     }
 
     public function getInstallSql()
@@ -81,6 +83,13 @@ class Config extends \Ilch\Config\Install
                 Some Beauty code fixes
                 Fix twitch api
                 */
+            case "1.3.0":
+                // update zu 1.3.1
+                /*
+                add Parent Domain
+                */
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->->set('twitchstreams_domains', '');
         }
     }
 }

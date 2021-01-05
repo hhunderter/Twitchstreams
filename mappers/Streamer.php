@@ -108,7 +108,7 @@ class Streamer extends \Ilch\Mapper
         $api->setStreamer($streamerInDatabase);
         $onlineStreamer = $api->getOnlineStreamer();
 
-        foreach ($streamerInDatabase as $streamer) {
+        foreach ($streamerInDatabase as $id => $streamer) {
             $streamer->setTitle("")
                 ->setOnline(0)
                 ->setGame("")
@@ -123,10 +123,13 @@ class Streamer extends \Ilch\Mapper
                         ->setViewers($obj->getViewers())
                         ->setPreviewMedium($obj->getPreviewMedium())
                         ->setCreatedAt($obj->getCreatedAt());
+
                     unset($onlineStreamer[$id]);
                     break;
                 }
             }
+
+            $streamerInDatabase[$id] = $streamer;
 
             $this->save($streamer);
         }

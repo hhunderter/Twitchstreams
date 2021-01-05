@@ -40,6 +40,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('streamer', $streamer);
+        $this->getView()->set('domains', $this->getConfig()->get('twitchstreams_domains') ? explode(',', $this->getConfig()->get('twitchstreams_domains')) : []);
     }
 
     public function updateAction()

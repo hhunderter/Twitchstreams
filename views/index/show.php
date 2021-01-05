@@ -43,10 +43,12 @@ $date = new \Ilch\Date($streamer->getCreatedAt());
         </div>
         <div class="panel-footer clearfix">
             <div class="pull-left">
-                <button id="stream-popup" class="btn-default btn" href="javascript: void(0)" onclick="window.open('https://player.twitch.tv/?channel=<?=$streamer->getUser() ?>&parent=streamernews.example.com&muted=true', '', 'width=800, height=450');">
+                <button id="stream-popup" class="btn-default btn" href="javascript: void(0)" 
+                onclick="window.open('https://player.twitch.tv/?channel=<?=$streamer->getUser() ?>&parent=streamernews.example.com<?=(count($this->get('domains')) > 1 ? '&parent='.implode('&parent=', $this->get('domains')) : '') ?>&muted=true', '', 'width=800, height=450');">
                     <?=$this->getTrans('streamPopUp') ?>
                 </button>
-                <button id="chat-popup" class="btn-default btn" href="javascript: void(0)" onclick="window.open('https://www.twitch.tv/embed/<?=$streamer->getUser() ?>/chat?parent=streamernews.example.com', '', 'width=800, height=450');">
+                <button id="chat-popup" class="btn-default btn" href="javascript: void(0)" 
+                onclick="window.open('https://www.twitch.tv/embed/<?=$streamer->getUser() ?>/chat?parent=streamernews.example.com<?=(count($this->get('domains')) > 1 ? '&parent='.implode('&parent=', $this->get('domains')) : '') ?>', '', 'width=800, height=450');">
                     <?=$this->getTrans('chatPopUp') ?>
                 </button>
             </div>
@@ -58,7 +60,7 @@ $date = new \Ilch\Date($streamer->getCreatedAt());
         </div>
     </div>
 </div>
-
+&parent=embed.example.com
 <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -68,7 +70,7 @@ $(document).ready(function() {
         height: "400px",
         channel: "<?=$streamer->getUser() ?>",
         // only needed if your site is also embedded on embed.example.com and othersite.example.com
-        parent: ["embed.example.com"],
+        parent: ["localhost.net"<?=(count($this->get('domains')) > 1 ? ', "'.implode('", "', $this->get('domains')).'"' : '') ?>], //"embed.example.com"
         muted: true,
         autoplay: false
     };

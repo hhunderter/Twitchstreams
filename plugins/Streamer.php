@@ -27,19 +27,21 @@ class Streamer
                 curl_close($ch);
                 $allres = json_decode($data);
 
-                foreach ($allres->{'streams'} as $stream) {
-                    $model = new StreamerModel();
-                    if ($model) {
-                        $model->setUser($stream->{'channel'}->{'display_name'})
-                            ->setTitle($stream->{'channel'}->{'status'})
-                            ->setViewers($stream->{'viewers'})
-                            ->setOnline($stream->{'stream_type'} == 'live' ? true : false)
-                            ->setPreviewMedium(str_replace('{width}x{height}', '1920x1080', $stream->{'preview'}->{'template'}))
-                            ->setCreatedAt($stream->{'channel'}->{'updated_at'});
+                if (isset($allres->{'streams'})) {
+                    foreach ($allres->{'streams'} as $stream) {
+                        $model = new StreamerModel();
+                        if ($model) {
+                            $model->setUser($stream->{'channel'}->{'display_name'})
+                                ->setTitle($stream->{'channel'}->{'status'})
+                                ->setViewers($stream->{'viewers'})
+                                ->setOnline($stream->{'stream_type'} == 'live' ? true : false)
+                                ->setPreviewMedium(str_replace('{width}x{height}', '1920x1080', $stream->{'preview'}->{'template'}))
+                                ->setCreatedAt($stream->{'channel'}->{'updated_at'});
 
-                        $model->setGame($stream->{'channel'}->{'game'});
+                            $model->setGame($stream->{'channel'}->{'game'});
 
-                        $this->onlineStreamer[] = $model;
+                            $this->onlineStreamer[] = $model;
+                        }
                     }
                 }
             }
@@ -51,5 +53,6 @@ class Streamer
     public function setStreamer($streamer)
     {
         $this->streamer = $streamer;
+        return $this;
     }
 }
