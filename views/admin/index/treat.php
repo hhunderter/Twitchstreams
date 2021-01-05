@@ -9,7 +9,7 @@
                    type="text"
                    name="inputUser"
                    placeholder="<?=$this->getTrans('username') ?>"
-                   value="<?=($this->get('streamer') != '') ? $this->escape($this->get('streamer')->getUser()) : $this->originalInput('inputUser') ?>" />
+                   value="<?=$this->originalInput('inputUser', ($this->get('streamer') ? $this->escape($this->get('streamer')->getUser()) : '')) ?>" />
 
         </div>
     </div>

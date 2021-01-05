@@ -22,6 +22,15 @@
             </div>
         </div>
     </div>
+    
+    <div class="form-group">
+        <label for="domains" class="col-lg-2 control-label">
+            <?=$this->getTrans('domainsLabel') ?>
+        </label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" id="domains" name="domains" value="<?=$this->get('domains') ?>" placeholder="Domains">
+        </div>
+    </div>
 
     <?=$this->getSaveBar(); ?>
 </form>

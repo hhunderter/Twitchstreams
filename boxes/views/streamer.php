@@ -1,6 +1,6 @@
 <?php $streamer = $this->get('streamer'); ?>
 
-<?php if (!empty($streamer)): ?>
+<?php if ($streamer): ?>
   <ul class="list-unstyled">
     <?php foreach ($streamer as $stream): ?>
       <li>

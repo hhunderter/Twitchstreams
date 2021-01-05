@@ -15,7 +15,7 @@
         <th><?=$this->getCheckAllCheckbox('check_streamer') ?></th>
         <th>
           <a href="<?=$this->getUrl(['module' => 'twitchstreams', 'controller' => 'index', 'action' => 'update']) ?>" alt="<?=$this->getTrans('updateStreams') ?>" title="<?=$this->getTrans('updateStreams') ?>">
-            <i class="fa fa-refresh"></i>
+            <i class="fas fa-sync"></i>
           </a>
         </th>
         <th></th>
