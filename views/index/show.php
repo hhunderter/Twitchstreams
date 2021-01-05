@@ -60,7 +60,7 @@ $date = new \Ilch\Date($streamer->getCreatedAt());
         </div>
     </div>
 </div>
-&parent=embed.example.com
+
 <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
