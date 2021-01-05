@@ -89,7 +89,7 @@ class Config extends \Ilch\Config\Install
                 add Parent Domain
                 */
                 $databaseConfig = new \Ilch\Config\Database($this->db());
-                $databaseConfig->->set('twitchstreams_domains', '');
+                $databaseConfig->set('twitchstreams_domains', '');
             case "1.3.1":
                 // update zu 1.3.2
                 /*
