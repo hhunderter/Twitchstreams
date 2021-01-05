@@ -100,7 +100,7 @@ class Streamer extends \Ilch\Mapper
         } else {
             $streamerInDatabase[] = $streamer;
         }
-        
+
         if (!$streamerInDatabase){
             return null;
         }
@@ -116,7 +116,8 @@ class Streamer extends \Ilch\Mapper
                 ->setPreviewMedium("");
 
             foreach ($onlineStreamer as $id => $obj) {
-                if ($streamer->getUser() == $obj->getUser()) {
+                if (strtolower($streamer->getUser()) == strtolower($obj->getUser())) {
+                    $streamer->setUser($obj->getUser());
                     $streamer->setTitle($obj->getTitle())
                         ->setOnline($obj->getOnline())
                         ->setGame($obj->getGame())

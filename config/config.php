@@ -6,7 +6,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'twitchstreams',
-        'version' => '1.3.1',
+        'version' => '1.3.2',
         'icon_small' => 'fa-twitch',
         'author' => 'Fasse, Fabian',
         'languages' => [
@@ -90,6 +90,11 @@ class Config extends \Ilch\Config\Install
                 */
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->->set('twitchstreams_domains', '');
+            case "1.3.1":
+                // update zu 1.3.2
+                /*
+                some fixes
+                */
         }
     }
 }
