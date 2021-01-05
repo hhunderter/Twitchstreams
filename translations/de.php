@@ -27,5 +27,5 @@ return [
     'hideChat' => 'Chat ausblenden',
     'apiKeyLabel' => 'API-Key:',
     'domainsLabel' => 'Domain (s):<br>
-    (mit "," können mehrere Eingetragen werden)',
+    (mit "," können mehrere eingetragen werden (embed.example.com,othersite.example.com))',
 ];

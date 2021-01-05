@@ -27,5 +27,5 @@ return [
     'hideChat' => 'Hide Chat',
     'apiKeyLabel' => 'API-Key:',
     'domainsLabel' => 'Domain (s): <br>
-     (With "," more can be Registered)',
+     (With "," more can be Registered (embed.example.com,othersite.example.com))',
 ];
