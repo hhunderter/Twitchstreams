@@ -15,6 +15,9 @@ alle Dateien, in ihrer Ordnerstrucktur hochladen (*Ilch2Root*/application/module
 
 Nach Uploaden aller Datein muss das Modul im Backend bei der Module Übersicht unter Nicht installierte Module installiert werden.
 
+#### Usage
+Nach der Installation musst du dir zunächst auf [https://dev.twitch.tv/console/apps](https://dev.twitch.tv/console/apps) eine App erstellen und die Felder unter `Module > Twitchstreams > Einstellungen` mit deinen Daten ausfüllen. 
+
 Anschließend muss das Modul entsprechend im Menü verlinkt werden.
 
 # Streamer-Daten updaten
