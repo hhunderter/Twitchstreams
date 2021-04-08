@@ -6,7 +6,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'twitchstreams',
-        'version' => '1.3.2',
+        'version' => '1.3.3',
         'icon_small' => 'fa-twitch',
         'author' => 'Fasse, Fabian',
         'languages' => [
@@ -94,6 +94,11 @@ class Config extends \Ilch\Config\Install
                 // update zu 1.3.2
                 /*
                 some fixes
+                */
+            case "1.3.2":
+                // update zu 1.3.3
+                /*
+                Update Settings info
                 */
         }
     }

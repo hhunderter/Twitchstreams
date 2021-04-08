@@ -1,4 +1,7 @@
 <form method="POST" class="form-horizontal" action="">
+<div class="alert alert-info">
+        <?= $this->getTrans('getyourkeys', '<a href="https://dev.twitch.tv/console/apps" target="_blank">https://dev.twitch.tv/console/apps</a>') ?>
+    </div>
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="apiKey" class="col-lg-2 control-label">

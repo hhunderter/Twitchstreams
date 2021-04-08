@@ -28,4 +28,5 @@ return [
     'apiKeyLabel' => 'API-Key:',
     'domainsLabel' => 'Domain (s): <br>
      (With "," more can be Registered (embed.example.com,othersite.example.com))',
+    'getyourkeys' => 'In order to fill out the following fields, you must first create an app on% s.',
 ];

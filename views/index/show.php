@@ -44,11 +44,11 @@ $date = new \Ilch\Date($streamer->getCreatedAt());
         <div class="panel-footer clearfix">
             <div class="pull-left">
                 <button id="stream-popup" class="btn-default btn" href="javascript: void(0)" 
-                onclick="window.open('https://player.twitch.tv/?channel=<?=$streamer->getUser() ?>&parent=streamernews.example.com<?=(count($this->get('domains')) > 1 ? '&parent='.implode('&parent=', $this->get('domains')) : '') ?>&muted=true', '', 'width=800, height=450');">
+                onclick="window.open('https://player.twitch.tv/?channel=<?=$streamer->getUser() ?>&parent=localhost.net<?=(count($this->get('domains')) > 1 ? '&parent='.implode('&parent=', $this->get('domains')) : '') ?>&muted=true', '', 'width=800, height=450');">
                     <?=$this->getTrans('streamPopUp') ?>
                 </button>
                 <button id="chat-popup" class="btn-default btn" href="javascript: void(0)" 
-                onclick="window.open('https://www.twitch.tv/embed/<?=$streamer->getUser() ?>/chat?parent=streamernews.example.com<?=(count($this->get('domains')) > 1 ? '&parent='.implode('&parent=', $this->get('domains')) : '') ?>', '', 'width=800, height=450');">
+                onclick="window.open('https://www.twitch.tv/embed/<?=$streamer->getUser() ?>/chat?parent=localhost.net<?=(count($this->get('domains')) > 1 ? '&parent='.implode('&parent=', $this->get('domains')) : '') ?>', '', 'width=800, height=450');">
                     <?=$this->getTrans('chatPopUp') ?>
                 </button>
             </div>
