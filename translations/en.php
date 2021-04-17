@@ -19,6 +19,8 @@ return [
     'updateStreams' => 'Update Streams',
     'updateSuccess' => 'Update successful',
     'requestEveryPage' => 'Update Streams on each page view?',
+    'showOffline' => 'Show offline Streams?',
+    'offline' => 'Offline',
     'streamPopUp' => 'Stream PopUp',
     'chatPopUp' => 'Chat PopUp',
     'showStream' => 'Show Stream',

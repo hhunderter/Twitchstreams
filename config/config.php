@@ -6,7 +6,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'twitchstreams',
-        'version' => '1.3.3',
+        'version' => '1.4.0',
         'icon_small' => 'fa-twitch',
         'author' => 'Fasse, Fabian',
         'languages' => [
@@ -26,11 +26,11 @@ class Config extends \Ilch\Config\Install
                 ],
                 'en_EN' => [
                     'name' => 'Twitchstreams'
-                ]
-            ]
+                ],
+            ],
         ],
         'ilchCore' => '2.1.41',
-        'phpVersion' => '7.0'
+        'phpVersion' => '7.0',
     ];
 
     public function install()
@@ -100,6 +100,13 @@ class Config extends \Ilch\Config\Install
                 /*
                 Update Settings info
                 */
+            case "1.3.3":
+                // update zu 1.4.0
+                /*
+                ADD Option Show offline Streams
+                */
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('twitchstreams_showOffline', false);
         }
     }
 }

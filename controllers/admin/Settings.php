@@ -37,7 +37,8 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('twitchstreams_requestEveryPageCall', $this->getRequest()->getPost('requestEveryPage'))
                 ->set('twitchstreams_apiKey', $this->getRequest()->getPost('apiKey'))
-                ->set('twitchstreams_domains', $this->getRequest()->getPost('domains'));
+                ->set('twitchstreams_domains', $this->getRequest()->getPost('domains'))
+                ->set('twitchstreams_showOffline', $this->getRequest()->getPost('showOffline'));
 
             $this->redirect()
                 ->withMessage('saveSuccess')
@@ -46,6 +47,7 @@ class Settings extends \Ilch\Controller\Admin
 
         $this->getView()->set('requestEveryPage', $this->getConfig()->get('twitchstreams_requestEveryPageCall'))
             ->set('apiKey', (string)$this->getConfig()->get('twitchstreams_apiKey'))
-            ->set('domains', (string)$this->getConfig()->get('twitchstreams_domains'));
+            ->set('domains', (string)$this->getConfig()->get('twitchstreams_domains'))
+            ->set('showOffline', (string)$this->getConfig()->get('twitchstreams_showOffline'));
     }
 }

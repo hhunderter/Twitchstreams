@@ -8,11 +8,12 @@ use \Modules\Twitchstreams\Plugins\Streamer as StreamerAPI;
 class Streamer extends \Ilch\Mapper
 {
 
-    public function getStreamer($where = [])
+    public function getStreamer($where = [], $orderBy = ['user' => 'ASC', 'online' => 'DESC'])
     {
         $resultArray = $this->db()->select('*')
             ->from('twitchstreams_streamer')
             ->where($where)
+            ->order($orderBy)
             ->execute()
             ->fetchRows();
 

@@ -19,6 +19,8 @@ return [
     'updateStreams' => 'Update Streams',
     'updateSuccess' => 'Update erfolgreich',
     'requestEveryPage' => 'Streams bei jedem Seitenaufruf aktualisieren?',
+    'showOffline' => 'Offline-Streams anzeigen?',
+    'offline' => 'Offline',
     'streamPopUp' => 'Stream PopUp',
     'chatPopUp' => 'Chat PopUp',
     'showStream' => 'Stream einblenden',

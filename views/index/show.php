@@ -1,5 +1,5 @@
 <?php
-$streamer = $this->get('streamer')[0];
+$streamer = $this->get('streamer');
 $date = new \Ilch\Date($streamer->getCreatedAt());
 ?>
 
@@ -32,7 +32,11 @@ $date = new \Ilch\Date($streamer->getCreatedAt());
                     </li>
                     <li class="list-group-item">
                         <?=$this->getTrans('onlineSince') ?>
+                        <?php if ($streamer->getOnline()): ?>
                         <span class="badge"><?=$date->format("d.m.Y H:i") ?></span>
+                        <?php else: ?>
+                        <span class="badge"><?=$this->getTrans('offline') ?></span>
+                        <?php endif; ?>
                     </li>
                 </ul>
             </div>
